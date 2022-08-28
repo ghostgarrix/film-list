@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import "./App.css";
-import Card from "./components/Card";
 import { movies$ } from "./movies";
 import { Movie, moviesActions, moviesSelectors } from "./features/Movie";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
+import { filtersActions, filtersSelectors } from "./features/Filters";
+import "./App.css";
 import OffsetSelector from "./components/OffsetSelector";
 import PageSelector from "./components/PageSelector";
-import { filtersActions, filtersSelectors } from "./features/Filters";
+import Card from "./components/Card";
 import MultiSelectMenu from "./components/MultiSelectMenu";
 
 const App = (): React.ReactElement | null => {
@@ -28,6 +28,7 @@ const App = (): React.ReactElement | null => {
   }, []);
 
   const categories = useAppSelector(moviesSelectors.getCategories);
+
   useEffect(() => {
     dispatch(filtersActions.setSelectedCategories(categories));
   }, [dispatch, categories]);
@@ -81,15 +82,15 @@ const App = (): React.ReactElement | null => {
                 }
               />
             ))
-          : "No more movie to be displayed"}
+          : "No movies to be displayed"}
       </div>
       <div className={"footer"}>
-        {numberOfPages > 1 && (
+        {numberOfPages > 1 && movies.length ? (
           <PageSelector
             numberOfPages={numberOfPages}
             currentPage={currentPage}
           />
-        )}
+        ) : null}
       </div>
     </div>
   );

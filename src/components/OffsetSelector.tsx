@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Center, Text } from "@chakra-ui/react";
 import { useAppDispatch } from "../app/hooks";
 import { filtersActions, OFFSET } from "../features/Filters";
+import { DEFAULT_COLOR } from "../utils/theme";
 
 const OffsetSelector = (): React.ReactElement | null => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const OffsetSelector = (): React.ReactElement | null => {
       {OFFSET.map((offset) => (
         <Button
           key={offset}
-          colorScheme="teal"
+          colorScheme={DEFAULT_COLOR}
           variant={offset === selectedOffset ? "solid" : "outline"}
           m={1}
           boxShadow={"2xl"}

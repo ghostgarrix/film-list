@@ -18,7 +18,6 @@ const filtersSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    setFilters: (_state, action: PayloadAction<Filters>) => action.payload,
     setOffset: (state, action: PayloadAction<number>) => {
       state.offset = action.payload;
       state.currentPage = 1;
@@ -38,9 +37,6 @@ const stateSelector = createSelector(
 );
 
 export const filtersSelectors = {
-  getFilters: createSelector(stateSelector, (state) => {
-    return state;
-  }),
   getOffset: createSelector(stateSelector, (state) => {
     return state.offset;
   }),

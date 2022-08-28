@@ -3,6 +3,7 @@ import { FormControl } from "@chakra-ui/react";
 import { GroupBase, MultiValue, Select } from "chakra-react-select";
 import { useAppDispatch } from "../app/hooks";
 import { filtersActions } from "../features/Filters";
+import { DEFAULT_COLOR } from "../utils/theme";
 
 interface MultiSelectMenuProps {
   label: string;
@@ -46,11 +47,12 @@ const MultiSelectMenu = ({
       <Select<CategoryOption, true, GroupBase<CategoryOption>>
         isMulti
         options={groupedOptions}
-        placeholder="Select categories"
+        placeholder={"Select categories"}
         closeMenuOnSelect={false}
-        selectedOptionStyle="check"
+        selectedOptionStyle={"check"}
         hideSelectedOptions={false}
         onChange={onChangeOption}
+        colorScheme={DEFAULT_COLOR}
       />
     </FormControl>
   );

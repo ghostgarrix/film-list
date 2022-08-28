@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# MoviesList
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Dev Installation
 
-## Available Scripts
+- **With [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable):**
 
-In the project directory, you can run:
+```
+yarn
+yarn start
+```
 
-### `npm start`
+- **With [NPM](https://www.npmjs.com/get-npm):**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+npm i
+npm start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Enjoy 🎸🎉**
 
-### `npm test`
+## Description
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**MoviesList** is a web app that lists multiple movies, let's you like or delete some and shows the amount of likes and dislikes given to each movie. It also allows you to filter the list by number of elements displayed in the screen, a pagination and by categories. Feel free to play around with the app or to just take a look at the code.
 
-### `npm run build`
+The movies are hard coded in the movies.ts file.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Library used in this project
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### [ChakraUI](https://chakra-ui.com/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> [ChakraUI](https://chakra-ui.com/) Chakra UI is a simple, modular and accessible component library that gives you the building blocks you need to build your React applications.
 
-### `npm run eject`
+### [ReduxToolkit](https://redux-toolkit.js.org/)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+> [RTK](https://redux-toolkit.js.org/) The official, opinionated, batteries-included toolset for efficient Redux development
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### [Prettier](https://github.com/prettier/prettier#readme)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+> Consistent code style
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### [TO DO]
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+> Could be a good idea to add user authentification

@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { DEFAULT_COLOR, RED } from "../utils/theme";
 
 interface CardProps {
   id: string;
@@ -50,24 +51,24 @@ export const Card = ({
           value={barValue}
           m={5}
           size="xs"
-          colorScheme="teal"
-          bg={"red"}
+          colorScheme={DEFAULT_COLOR}
+          bg={RED}
           rounded={"lg"}
         />
 
         <Stack mt={8} direction={"row"} justifyContent={"space-evenly"}>
           <Button
             leftIcon={activeLeftIcon ? <BsHeartFill /> : <BsHeart />}
-            colorScheme="teal"
-            variant="solid"
+            colorScheme={DEFAULT_COLOR}
+            variant={"solid"}
             onClick={() => onPressLeftButton(id)}
           >
             {leftButtonText}
           </Button>
           <Button
             leftIcon={<RiDeleteBin6Line size={20} />}
-            colorScheme="red"
-            variant="solid"
+            colorScheme={RED}
+            variant={"solid"}
             onClick={() => onPressRightButton(id)}
           >
             {rightButtonText}

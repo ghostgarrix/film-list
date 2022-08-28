@@ -2,6 +2,7 @@ import { Box, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { filtersActions } from "../features/Filters";
+import { DEFAULT_COLOR, WHITE } from "../utils/theme";
 
 interface PageSelectorProps {
   numberOfPages: number;
@@ -27,7 +28,7 @@ const PageSelector = ({
   };
 
   return (
-    <Box m={5} p={6} bg={"white"} boxShadow={"2xl"} rounded={"lg"}>
+    <Box m={5} p={6} bg={WHITE} boxShadow={"2xl"} rounded={"lg"}>
       {pages.map((page) => (
         <Button
           key={page}
@@ -35,7 +36,7 @@ const PageSelector = ({
             (page === 0 && currentPage === 1) ||
             (page + 1 === pages.length && currentPage + 2 === pages.length)
           }
-          colorScheme="teal"
+          colorScheme={DEFAULT_COLOR}
           variant={page === selectedPage ? "solid" : "outline"}
           m={1}
           boxShadow={"2xl"}
