@@ -2,22 +2,23 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const OFFSET: number[] = [4, 8, 12];
 
-export interface Pagination {
+export interface Filters {
   offset: number;
   currentPage: number;
+  selectedCategories: string[];
 }
 
-const initialState: Pagination = {
+const initialState: Filters = {
   offset: OFFSET[0],
   currentPage: 1,
+  selectedCategories: [],
 };
 
-const paginationSlice = createSlice({
-  name: "pagination",
+const filtersSlice = createSlice({
+  name: "filters",
   initialState,
   reducers: {
-    setPagination: (_state, action: PayloadAction<Pagination>) =>
-      action.payload,
+    setFilters: (_state, action: PayloadAction<Filters>) => action.payload,
     setOffset: (state, action: PayloadAction<number>) => {
       state.offset = action.payload;
       state.currentPage = 1;
@@ -25,16 +26,19 @@ const paginationSlice = createSlice({
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
+    setSelectedCategories: (state, action: PayloadAction<string[]>) => {
+      state.selectedCategories = action.payload;
+    },
   },
 });
 
 const stateSelector = createSelector(
-  ({ pagination }: { pagination: Pagination }) => pagination,
+  ({ filters }: { filters: Filters }) => filters,
   (state) => state
 );
 
-export const paginationSelectors = {
-  getPagination: createSelector(stateSelector, (state) => {
+export const filtersSelectors = {
+  getFilters: createSelector(stateSelector, (state) => {
     return state;
   }),
   getOffset: createSelector(stateSelector, (state) => {
@@ -43,7 +47,10 @@ export const paginationSelectors = {
   getCurrentPage: createSelector(stateSelector, (state) => {
     return state.currentPage;
   }),
+  getSelectedCategories: createSelector(stateSelector, (state) => {
+    return state.selectedCategories;
+  }),
 };
 
-export const { actions: paginationActions, reducer: paginationReducer } =
-  paginationSlice;
+export const { actions: filtersActions, reducer: filtersReducer } =
+  filtersSlice;

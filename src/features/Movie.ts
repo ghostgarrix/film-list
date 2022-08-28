@@ -44,10 +44,26 @@ export const moviesSelectors = {
   getMoviesLength: createSelector(stateSelector, (state) => {
     return state.length;
   }),
-  getPaginatedMovies: (firstIndex: number, lastIndex: number) =>
+  getFilteredMovies: (
+    firstIndex: number,
+    lastIndex: number,
+    selectedCategories: string[]
+  ) =>
     createSelector(stateSelector, (state) => {
-      return state.slice(firstIndex, lastIndex);
+      const moviesByCat = state.filter((movie) =>
+        selectedCategories.includes(movie.category)
+      );
+      return moviesByCat.slice(firstIndex, lastIndex);
     }),
+  getCategories: createSelector(stateSelector, (state) => {
+    return state.reduce<string[]>((acc, curr) => {
+      const category = acc.find((category) => category === curr.category);
+      if (!category) {
+        acc.push(curr.category);
+      }
+      return acc;
+    }, []);
+  }),
 };
 
 export const { actions: moviesActions, reducer: moviesReducer } = moviesSlice;

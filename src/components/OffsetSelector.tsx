@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Center, Text } from "@chakra-ui/react";
 import { useAppDispatch } from "../app/hooks";
-import { OFFSET, paginationActions } from "../features/Pagination";
+import { filtersActions, OFFSET } from "../features/Filters";
 
 const OffsetSelector = (): React.ReactElement | null => {
   const dispatch = useAppDispatch();
@@ -9,13 +9,13 @@ const OffsetSelector = (): React.ReactElement | null => {
 
   const onChangeOffset = (number: number): void => {
     setSelectedOffset(number);
-    dispatch(paginationActions.setOffset(number));
+    dispatch(filtersActions.setOffset(number));
   };
 
   return (
     <Center>
       <Text color={"gray.500"} fontSize={"sm"}>
-        {"Elements displayed:"}
+        {"Elements displayed"}
       </Text>
       {OFFSET.map((offset) => (
         <Button

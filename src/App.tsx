@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import Card from "./components/Card";
-import MultiSelectMenu from "./components/MultiSelectMenu";
 import { movies$ } from "./movies";
 import { Movie, moviesActions, moviesSelectors } from "./features/Movie";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
-import { paginationActions, paginationSelectors } from "./features/Pagination";
 import OffsetSelector from "./components/OffsetSelector";
 import PageSelector from "./components/PageSelector";
+import { filtersActions, filtersSelectors } from "./features/Filters";
+import MultiSelectMenu from "./components/MultiSelectMenu";
 
 const App = (): React.ReactElement | null => {
   const dispatch = useAppDispatch();
-  const offset = useAppSelector(paginationSelectors.getOffset);
-  const currentPage = useAppSelector(paginationSelectors.getCurrentPage);
+  const offset = useAppSelector(filtersSelectors.getOffset);
+  const currentPage = useAppSelector(filtersSelectors.getCurrentPage);
 
   const loadMovies = async () => {
     try {
@@ -27,6 +27,11 @@ const App = (): React.ReactElement | null => {
     loadMovies();
   }, []);
 
+  const categories = useAppSelector(moviesSelectors.getCategories);
+  useEffect(() => {
+    dispatch(filtersActions.setSelectedCategories(categories));
+  }, [dispatch, categories]);
+
   const moviesLength = useAppSelector(moviesSelectors.getMoviesLength);
   const numberOfPages =
     moviesLength % offset
@@ -34,20 +39,28 @@ const App = (): React.ReactElement | null => {
       : Math.floor(moviesLength / offset);
   const firstDisplayedMovieIndex = offset * currentPage - offset;
 
+  const selectedCategories = useAppSelector(
+    filtersSelectors.getSelectedCategories
+  );
+
   const movies = useAppSelector(
-    moviesSelectors.getPaginatedMovies(
+    moviesSelectors.getFilteredMovies(
       firstDisplayedMovieIndex,
-      firstDisplayedMovieIndex + offset
+      firstDisplayedMovieIndex + offset,
+      selectedCategories
     )
   );
+
+  useEffect(() => {
+    if (!movies.length) {
+      dispatch(filtersActions.setCurrentPage(1));
+    }
+  }, [movies, dispatch]);
 
   return (
     <div className={"container"}>
       <div className={"header"}>
-        <MultiSelectMenu
-          label="Categories"
-          options={["Bat", "Tiger", "Lion"]}
-        />
+        <MultiSelectMenu label={"Categories"} options={categories} />
         <OffsetSelector />
       </div>
       <div className={"main"}>
@@ -68,7 +81,7 @@ const App = (): React.ReactElement | null => {
                 }
               />
             ))
-          : "You have deleted all the movies"}
+          : "No more movie to be displayed"}
       </div>
       <div className={"footer"}>
         {numberOfPages > 1 && (

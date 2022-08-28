@@ -1,104 +1,59 @@
-import React, { useState } from "react";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-} from "@chakra-ui/react";
-import { MenuButtonProps } from "@chakra-ui/react";
+import React from "react";
+import { FormControl } from "@chakra-ui/react";
+import { GroupBase, MultiValue, Select } from "chakra-react-select";
+import { useAppDispatch } from "../app/hooks";
+import { filtersActions } from "../features/Filters";
 
 interface MultiSelectMenuProps {
   label: string;
   options: string[];
-  onChange?: (selectedValues: string[]) => void;
-  buttonProps?: MenuButtonProps;
+}
+interface CategoryOption {
+  label: string;
+  value: string;
 }
 
-const MultiSelectMenu = (
-  props: MultiSelectMenuProps
-): React.ReactElement | null => {
-  const { label, options, buttonProps } = props;
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+const MultiSelectMenu = ({
+  label,
+  options,
+}: MultiSelectMenuProps): React.ReactElement | null => {
+  const dispatch = useAppDispatch();
+  const onChangeOption = (
+    selectedOptions: MultiValue<CategoryOption>
+  ): void => {
+    dispatch(
+      filtersActions.setSelectedCategories(
+        selectedOptions.reduce<string[]>((acc, curr) => {
+          acc.push(curr.label);
+          return acc;
+        }, [])
+      )
+    );
+  };
+
+  const groupedOptions = [
+    {
+      label,
+      options: options.reduce<CategoryOption[]>((acc, curr) => {
+        acc.push({ label: curr, value: curr });
+        return acc;
+      }, []),
+    },
+  ];
+
   return (
-    <Menu closeOnSelect={false}>
-      {({ onClose }) => (
-        <>
-          <MenuButton
-            /* eslint-disable @typescript-eslint/ban-ts-comment */
-            // @ts-ignore <MenuButton> does have a 'type' prop because it is just a button. This is to make sure clicking this doesn't submit any forms.
-            type="button"
-            /* eslint-enable @typescript-eslint/ban-ts-comment */
-            backgroundColor={selectedOptions.length ? "purple.200" : "white"}
-            color={selectedOptions.length ? "purple.500" : "gray.600"}
-            borderColor={selectedOptions.length ? "purple.200" : "gray.300"}
-            borderWidth={1}
-            p={2}
-            px={4}
-            borderRadius="25px"
-            _focus={{
-              outline: "none",
-            }}
-            {...buttonProps}
-          >
-            {`${label}${
-              selectedOptions.length > 0 ? ` (${selectedOptions.length})` : ""
-            }`}
-          </MenuButton>
-          <MenuList>
-            <MenuGroup title={undefined}>
-              <MenuItem
-                onClick={() => {
-                  setSelectedOptions([]);
-                  // Have to close, otherwise the defaultValue won't be reset correctly
-                  // and so the UI won't immediately show the menu item options unselected.
-                  onClose();
-                }}
-              >
-                Clear all
-              </MenuItem>
-            </MenuGroup>
-            <MenuDivider />
-            <MenuOptionGroup
-              title={undefined}
-              defaultValue={selectedOptions}
-              type="checkbox"
-              /* eslint-disable @typescript-eslint/ban-ts-comment */
-              // @ts-ignore Arguments type is just wrong upstream.
-              onChange={(values: string[]) => {
-                // Filter out empty strings, because, well, this component seems to add
-                // an empty string out of nowhere.
-                setSelectedOptions(values.filter((_) => _.length));
-                props.onChange?.(values);
-              }}
-              /* eslint-enable @typescript-eslint/ban-ts-comment */
-            >
-              {options.map((option) => {
-                return (
-                  // Use 'type'='button' to make sure it doesn't default to 'type'='submit'.
-                  <MenuItemOption
-                    key={`multiselect-menu-${option}`}
-                    /* eslint-disable @typescript-eslint/ban-ts-comment */
-                    // @ts-ignore <MenuItemOption> does have a 'type' prop because it is just a button. This is to make sure clicking this doesn't submit any forms.
-                    type="button"
-                    /* eslint-enable @typescript-eslint/ban-ts-comment */
-                    value={option}
-                  >
-                    {option}
-                  </MenuItemOption>
-                );
-              })}
-            </MenuOptionGroup>
-          </MenuList>
-        </>
-      )}
-    </Menu>
+    <FormControl p={4}>
+      <Select<CategoryOption, true, GroupBase<CategoryOption>>
+        isMulti
+        options={groupedOptions}
+        placeholder="Select categories"
+        closeMenuOnSelect={false}
+        selectedOptionStyle="check"
+        hideSelectedOptions={false}
+        onChange={onChangeOption}
+      />
+    </FormControl>
   );
 };
-
-MultiSelectMenu.displayName = "MultiSelectMenu";
 
 export default MultiSelectMenu;

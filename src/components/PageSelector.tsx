@@ -1,7 +1,7 @@
 import { Box, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
-import { paginationActions } from "../features/Pagination";
+import { filtersActions } from "../features/Filters";
 
 interface PageSelectorProps {
   numberOfPages: number;
@@ -22,7 +22,7 @@ const PageSelector = ({
   const onChangePage = (page: number): void => {
     if (page && page + 1 <= pages.length) {
       setSelectedPage(page);
-      dispatch(paginationActions.setCurrentPage(page));
+      dispatch(filtersActions.setCurrentPage(page));
     }
   };
 
