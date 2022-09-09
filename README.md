@@ -24,6 +24,9 @@ npm start
 
 The movies are hard coded in the movies.ts file.
 
+![ScreenShot1](public/screenshot1.png)
+![ScreenShot2](public/screenshot2.png)
+
 ## Library used in this project
 
 ### [ChakraUI](https://chakra-ui.com/)

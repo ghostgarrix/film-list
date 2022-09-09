@@ -30,6 +30,9 @@ const moviesSlice = createSlice({
     },
     toggleLike: (state, action: PayloadAction<string>) => {
       const index = state.findIndex((movie) => movie.id === action.payload);
+      state[index].liked
+        ? (state[index].likes -= 1)
+        : (state[index].likes += 1);
       state[index].liked = !state[index].liked;
     },
   },
