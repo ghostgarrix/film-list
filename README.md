@@ -20,7 +20,7 @@ npm start
 
 ## Description
 
-**MoviesList** is a web app that lists multiple movies, let's you like or delete some and shows the amount of likes and dislikes given to each movie. It also allows you to filter the list by number of elements displayed in the screen, a pagination and by categories. Feel free to play around with the app or to just take a look at the code.
+**MoviesList** is a responsive web app that lists multiple movies, let's you like or delete some and shows the amount of likes and dislikes given to each movie. It also allows you to filter the list by number of elements displayed in the screen, a pagination and by categories. Feel free to play around with the app or to just take a look at the code.
 
 The movies are hard coded in the movies.ts file.
 
